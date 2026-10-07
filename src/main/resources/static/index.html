@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusCore - Modern, intuitive and powerful Student Management Portal for managing students and departments seamlessly.">
+  <title>CampusCore | Student Management Portal</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="header-nav" id="mainHeader">
+      <div class="brand-section">
+        <div class="brand-logo-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <h1>CampusCore</h1>
+          <div class="brand-badge">
+            <span class="status-indicator" id="serverStatusDot"></span>
+            <span id="serverStatusText">System Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Quick Find by ID -->
+        <div class="quick-search-box" title="Search student directly by ID">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="number" id="quickIdInput" placeholder="Find by ID..." min="1">
+          <button class="btn btn-secondary" id="btnQuickFind" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Go</button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="btn btn-icon" id="btnThemeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+          <svg id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- New Student Action -->
+        <button class="btn btn-primary" id="btnOpenAddModal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add Student</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Metrics / Stats Section -->
+    <section class="stats-grid" id="statsSection" aria-label="Overview Metrics">
+      <div class="stat-card card-primary">
+        <div class="stat-info">
+          <p>Total Enrolled</p>
+          <h2 id="metricTotalStudents">0</h2>
+        </div>
+        <div class="stat-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stat-card card-emerald">
+        <div class="stat-info">
+          <p>Departments</p>
+          <h2 id="metricTotalDepts">0</h2>
+        </div>
+        <div class="stat-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stat-card card-amber">
+        <div class="stat-info">
+          <p>Average Age</p>
+          <h2 id="metricAvgAge">--</h2>
+        </div>
+        <div class="stat-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section class="toolbar-section" id="controlsToolbar">
+      <div class="toolbar-top">
+        <div class="search-field-container">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search students by name..." autocomplete="off">
+          <button id="btnClearSearch" class="btn btn-icon" style="width: 24px; height: 24px; display: none;" title="Clear">
+            &times;
+          </button>
+        </div>
+
+        <div class="view-controls">
+          <button class="btn btn-icon" id="btnRefreshList" title="Refresh List">
+            <svg id="refreshIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+
+          <div style="display: flex; gap: 4px;">
+            <button class="view-toggle-btn active" id="btnViewGrid" title="Card Grid View">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Grid</span>
+            </button>
+            <button class="view-toggle-btn" id="btnViewTable" title="Table View">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              <span>Table</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Department Filter Pills -->
+      <div class="dept-filter-bar" id="deptFilterBar">
+        <span class="filter-chip-label">Filter Department:</span>
+        <button class="filter-chip active" data-dept="all">All Departments</button>
+        <!-- Dynamic department pills inserted via JS -->
+      </div>
+    </section>
+
+    <!-- Main Content Presentation -->
+    <main id="mainContent">
+      <!-- Grid View Container -->
+      <div class="students-grid" id="studentsGridContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Table View Container -->
+      <div class="table-container" id="studentsTableContainer" style="display: none;">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student Name</th>
+              <th>Department</th>
+              <th>Age</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-state-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <line x1="17" y1="8" x2="23" y2="8"></line>
+          </svg>
+        </div>
+        <h3 id="emptyStateTitle">No Students Found</h3>
+        <p id="emptyStateDesc">Get started by registering a new student to your campus records.</p>
+        <button class="btn btn-primary" id="btnEmptyAdd">
+          + Add First Student
+        </button>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Modal: Add / Edit Student -->
+  <div class="modal-overlay" id="studentFormModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="formModalTitle">Add New Student</h3>
+        <button class="btn btn-icon" id="btnCloseFormModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="studentForm" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="formStudentId">
+          
+          <div class="form-group">
+            <label for="formName">Full Name *</label>
+            <input type="text" id="formName" class="form-control" placeholder="e.g. Maya Lin" required>
+            <div class="form-error-msg" id="nameError">Name is required.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="formAge">Age (18 - 60) *</label>
+              <input type="number" id="formAge" class="form-control" placeholder="18-60" min="18" max="60" required>
+              <div class="form-error-msg" id="ageError">Age must be between 18 and 60.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="formDeptId">Dept ID *</label>
+              <input type="number" id="formDeptId" class="form-control" placeholder="e.g. 1" min="1" required>
+              <div class="form-error-msg" id="deptIdError">Dept ID is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="formDeptName">Department Name</label>
+            <input type="text" id="formDeptName" class="form-control" placeholder="e.g. ECE, Computer Science" list="deptSuggestions">
+            <datalist id="deptSuggestions">
+              <!-- Dynamically populated -->
+            </datalist>
+            <p class="form-hint">Tip: If matching an existing department ID, the department name will update or associate accordingly.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelForm">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitForm">
+            <span id="btnSubmitText">Save Student</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: View Student Details -->
+  <div class="modal-overlay" id="studentDetailsModal" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="detailsTitle">Student Profile</h3>
+        <button class="btn btn-icon" id="btnCloseDetailsModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="details-hero">
+          <div class="details-avatar" id="detailsAvatar">--</div>
+          <h2 id="detailsName" style="font-size: 1.35rem; font-weight: 700;">--</h2>
+          <span class="student-id-tag" id="detailsIdTag">ID: #--</span>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="label">Department</span>
+            <span class="value" id="detailsDeptName">--</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Dept ID</span>
+            <span class="value" id="detailsDeptId">--</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Age</span>
+            <span class="value" id="detailsAge">--</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Enrollment</span>
+            <span class="value" style="color: var(--accent-emerald);">Active</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnDetailsEdit">Edit Profile</button>
+        <button class="btn btn-danger" id="btnDetailsDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Delete -->
+  <div class="modal-overlay" id="deleteConfirmModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-dialog" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 id="deleteModalTitle" style="color: var(--accent-rose);">Confirm Deletion</h3>
+        <button class="btn btn-icon" id="btnCloseDeleteModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 1.5rem 1.5rem 0.5rem;">
+        <p style="margin-bottom: 0.75rem; color: var(--text-muted);">
+          Are you sure you want to delete student:
+        </p>
+        <div style="padding: 0.85rem; background: rgba(244, 63, 94, 0.08); border-radius: var(--radius-sm); border: 1px solid rgba(244, 63, 94, 0.2); margin-bottom: 1rem;">
+          <strong id="deleteTargetName" style="color: var(--text-main); font-size: 1.05rem;">Student Name</strong>
+          <div id="deleteTargetId" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.2rem;">ID: #--</div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-dim);">This action will remove the record from the database permanently.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelDelete">Cancel</button>
+        <button class="btn btn-danger" id="btnConfirmDelete">Delete Record</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

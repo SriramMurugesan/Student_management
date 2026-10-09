@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: student-management
+    runtime: docker
+    plan: free
+    healthCheckPath: /
